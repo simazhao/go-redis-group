@@ -1,5 +1,7 @@
 package config
 
 type PoolConfig struct{
-	MaxClientConns int
+	MaxDataBases int
+	MaxConnectionsInDataBase int
+	ClientConfig ClientConfig
 }
