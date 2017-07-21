@@ -13,6 +13,7 @@ import (
 	"strings"
 	"path"
 	"reflect"
+	"runtime"
 )
 
 type WebServer struct {
@@ -72,10 +73,14 @@ func NewWebServer() *WebServer {
 		r.Text(200, "welcome to redis-group-api")
 	})
 
+	r.Put("/wastetoomuch", func() {
+		runtime.GC()
+	})
+
 	r.Group("/group/:groupx", func(r martini.Router){
 		r.Get("/get/:key", server.Get)
-		r.Get("/set/:key/:value", server.Set)
-		r.Get("/setex/:key/:value/:expire", server.SetEx)
+		r.Put("/set/:key/:value", server.Set)
+		r.Put("/setex/:key/:value/:expire", server.SetEx)
 		r.Get("/echo/:key", server.Echo)
 	})
 
